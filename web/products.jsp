@@ -1,19 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>portfolio</title>
+    <title>Products</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="4useri Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-    Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+    <meta name="keywords" content="4useri Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Alice' rel='stylesheet' type='text/css'>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.easydropdown.js"></script>
-
     <script type="text/javascript" src="js/easing.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -42,7 +41,7 @@
 <div class="projects">
     <div class="products-section">
         <div class="container">
-            <h2>PROJECT/<span>all</span></h2>
+            <h2>PRODUCTS/<span>all</span></h2>
             <script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -232,7 +231,7 @@
 </div>
 <!-- product -->
 <!-- footer -->
-  <%@include file="includes/footer.jsp" %>
+<%@include file="includes/footer.jsp" %>
 <!-- footer -->
 </body>
 </html>

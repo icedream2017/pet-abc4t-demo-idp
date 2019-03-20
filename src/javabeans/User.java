@@ -114,7 +114,7 @@ public class User {
 
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<User>();
-        String sql="select * from usertable";
+        String sql="select * from idp_users";
         ResultSet rs=db.getSelect(sql);
         try {
             while(rs.next()) {
@@ -136,7 +136,7 @@ public class User {
     }
 
     public boolean getUserById(String id) {
-        String sql="select * from usertable where u_id=?";
+        String sql="select * from idp_users where u_id=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();
@@ -156,7 +156,7 @@ public class User {
     }
 
     public int identifyUser(String id, String pw) {
-        String sql = "select * from usertable where u_id=?";
+        String sql = "select * from idp_users where u_id=?";
         ResultSet rs=db.getSelect(sql, new String[]{id});
         try {
             if(rs.next()) {
@@ -180,24 +180,24 @@ public class User {
     }
 
     public int addUser(String v[]) {
-        String sql="insert into usertable values(?,?,?,?,0,0,0)";
+        String sql="insert into idp_users values(?,?,?,?,0,0,0)";
         return db.update(sql, v);
     }
 
     public int deleteUser(String id) {
-        String sql="delete from usertable where u_id=?";
+        String sql="delete from idp_users where u_id=?";
         return db.update(sql, id);
     }
 
     public int updateUser(String id, String v[]) {
         // TODO This method is incomplete.
-        String sql="update usertable set -- ";
+        String sql="update idp_users set -- ";
         return db.update(sql, v, id);
     }
 
     public boolean changePassword(String id, String oldpw, String newpw) {
         if(identifyUser(id,oldpw)!=-1) {
-            String sql = "update usertable set u_pw=? where u_id=?";
+            String sql = "update idp_users set u_pw=? where u_id=?";
             int res = db.update(sql, new String[]{newpw}, id);
             if(res==1) {
                 return true;

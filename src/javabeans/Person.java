@@ -145,7 +145,7 @@ public class Person {
 
     public ArrayList<Person> getAllPersons() {
         ArrayList<Person> persons = new ArrayList<Person>();
-        String sql="select * from persontable";
+        String sql="select * from idp_persons";
         ResultSet rs=db.getSelect(sql);
         try {
             while(rs.next()) {
@@ -171,7 +171,7 @@ public class Person {
     }
 
     public boolean getPersonById(String id) {
-        String sql="select * from persontable where u_id=?";
+        String sql="select * from idp_persons where u_id=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();

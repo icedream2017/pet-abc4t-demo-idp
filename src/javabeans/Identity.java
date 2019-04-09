@@ -1,18 +1,20 @@
 package javabeans;
 
+import database.DatabaseController;
 import database.MyDatabase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Identity {
+public class Identity implements DatabaseController {
     private String uid = null;
     private String iid = null;
     private String hashcode = null;
     private String purpose = null;
     private String pubkey = null;
     private String privkey = null;
+    // private int permission = 0x00;
 
     private MyDatabase db = null;
 
@@ -88,10 +90,12 @@ public class Identity {
         this.privkey = privkey;
     }
 
-    public ArrayList<Identity> getAllIdentities() {
+    @SuppressWarnings("Duplicates")
+    @Override
+    public ArrayList<Identity> getAllElements() {
         ArrayList<Identity> identities = new ArrayList<Identity>();
         String sql="select * from idp_identities";
-        ResultSet rs=db.getSelect(sql);
+        ResultSet rs = db.getSelect(sql);
         try {
             while(rs.next()) {
                 Identity i = new Identity(
@@ -110,8 +114,32 @@ public class Identity {
         return identities;
     }
 
-    public boolean getIdentityById(String id) {
+    @SuppressWarnings("Duplicates")
+    public ArrayList<Identity> getIdentitiesByUid(String uid) {
+        ArrayList<Identity> identities = new ArrayList<Identity>();
         String sql="select * from idp_identities where u_id=?";
+        ResultSet rs = db.getSelect(sql, uid);
+        try {
+            while(rs.next()) {
+                Identity i = new Identity(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6));
+                identities.add(i);
+            }
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return identities;
+    }
+
+    @Override
+    public boolean getElementById(String id) {
+        String sql="select * from idp_identities where i_id=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();
@@ -127,5 +155,29 @@ public class Identity {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public int add(String v[]) {
+        String sql = "insert into idp_identities values(?,?,?,?,?,?)";
+        return db.update(sql, v);
+    }
+
+    @Override
+    public int delete(String id) {
+        String sql = "delete from idp_identities where i_id=?";
+        return db.update(sql, id);
+    }
+
+    @Override
+    public int update(String id, String v[]) {
+        // TODO This method is incomplete.
+        String sql = "update idp_identities set --";
+        return db.update(sql, v, id);
+    }
+
+    @Override
+    public void close() {
+        if(db!=null) db.close();
     }
 }

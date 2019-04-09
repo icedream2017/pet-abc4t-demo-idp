@@ -1,12 +1,13 @@
 package javabeans;
 
+import database.DatabaseController;
 import database.MyDatabase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Person {
+public class Person implements DatabaseController {
     private String uid = null; // FK to class User
     private String taxID = null; // tax ID for a person
     private String title = null;
@@ -41,7 +42,7 @@ public class Person {
     }
 
     public void setAll(String uid, String taxID, String title, String surname, String firstname,
-                  int gender, String birthdate, String address, String email, String phone, String description) {
+                       int gender, String birthdate, String address, String email, String phone, String description) {
         this.uid = uid;
         this.taxID = taxID;
         this.title = title;
@@ -143,12 +144,13 @@ public class Person {
         this.description = description;
     }
 
-    public ArrayList<Person> getAllPersons() {
+    @Override
+    public ArrayList<Person> getAllElements() {
         ArrayList<Person> persons = new ArrayList<Person>();
-        String sql="select * from idp_persons";
-        ResultSet rs=db.getSelect(sql);
+        String sql = "select * from idp_persons";
+        ResultSet rs = db.getSelect(sql);
         try {
-            while(rs.next()) {
+            while (rs.next()) {
                 Person p = new Person(
                         rs.getString(1),
                         rs.getString(2),
@@ -164,14 +166,15 @@ public class Person {
                 persons.add(p);
             }
             rs.close();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return persons;
     }
 
-    public boolean getPersonById(String id) {
-        String sql="select * from idp_persons where u_id=?";
+    @Override
+    public boolean getElementById(String id) {
+        String sql = "select * from idp_persons where u_id=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();
@@ -193,4 +196,29 @@ public class Person {
         }
         return false;
     }
+
+    @Override
+    public int add(String v[]) {
+        String sql = "insert into idp_persons values(?,?,?,?,?,0,?,?,?,?,?)";
+        return db.update(sql, v);
+    }
+
+    @Override
+    public int delete(String id) {
+        String sql = "delete from idp_persons where p_id=?";
+        return db.update(sql, id);
+    }
+
+    @Override
+    public int update(String id, String v[]) {
+        // TODO This method is incomplete.
+        String sql = "update idp_persons set --";
+        return db.update(sql, v, id);
+    }
+
+    @Override
+    public void close() {
+        if(db!=null) db.close();
+    }
+
 }

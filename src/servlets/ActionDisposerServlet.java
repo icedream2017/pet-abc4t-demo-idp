@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "actionDisposerServlet")
-public class actionDisposerServlet extends HttpServlet {
+@WebServlet(name = "ActionDisposerServlet")
+public class ActionDisposerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

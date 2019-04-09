@@ -1,12 +1,13 @@
 package javabeans;
 
+import database.DatabaseController;
 import database.MyDatabase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class User {
+public class User implements DatabaseController {
     private String uid = null; // unique user ID in database
     private String username = null; // login name
     private String password = null; // login password (hashed)
@@ -112,7 +113,8 @@ public class User {
         this.banFlag = banFlag;
     }
 
-    public ArrayList<User> getAllUsers() {
+    @Override
+    public ArrayList<User> getAllElements() {
         ArrayList<User> users = new ArrayList<User>();
         String sql="select * from idp_users";
         ResultSet rs=db.getSelect(sql);
@@ -135,7 +137,8 @@ public class User {
         return users;
     }
 
-    public boolean getUserById(String id) {
+    @Override
+    public boolean getElementById(String id) {
         String sql="select * from idp_users where u_id=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
@@ -179,17 +182,20 @@ public class User {
         return -1;
     }
 
-    public int addUser(String v[]) {
+    @Override
+    public int add(String v[]) {
         String sql="insert into idp_users values(?,?,?,?,0,0,0)";
         return db.update(sql, v);
     }
 
-    public int deleteUser(String id) {
+    @Override
+    public int delete(String id) {
         String sql="delete from idp_users where u_id=?";
         return db.update(sql, id);
     }
 
-    public int updateUser(String id, String v[]) {
+    @Override
+    public int update(String id, String v[]) {
         // TODO This method is incomplete.
         String sql="update idp_users set -- ";
         return db.update(sql, v, id);
@@ -208,6 +214,7 @@ public class User {
         return false;
     }
 
+    @Override
     public void close() {
         if(db!=null) db.close();
     }

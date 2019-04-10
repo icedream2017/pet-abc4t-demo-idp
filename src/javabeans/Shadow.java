@@ -55,4 +55,19 @@ public class Shadow {
         return shadowedString;
     }
 
+    public String shadowInformation(Person person) {
+        String shadowedString = "|";
+        shadowedString += person.getTitle() + "|";
+        shadowedString += person.getSurname() + "|";
+        shadowedString += person.getGender() + "|";
+        shadowedString += this.taxid ? person.getTaxID()+"|" : "x|";
+        shadowedString += this.firstname ? person.getFirstname()+"|" : "x|";
+        shadowedString += this.birthdate ? person.getBirthdate()+"|" : "x|";
+        shadowedString += this.address ? person.getAddress()+"|" : "x|";
+        shadowedString += this.email ? person.getEmail()+"|" : "x|";
+        shadowedString += this.phone ? person.getPhone()+"|" : "x|";
+        shadowedString += this.description ? person.getDescription()+"|" : "x|";
+        return shadowedString;
+    }
+
 }

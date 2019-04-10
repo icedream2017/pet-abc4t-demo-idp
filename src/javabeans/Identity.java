@@ -1,5 +1,6 @@
 package javabeans;
 
+import cryptography.Cryptography;
 import database.DatabaseController;
 import database.MyDatabase;
 
@@ -179,5 +180,16 @@ public class Identity implements DatabaseController {
     @Override
     public void close() {
         if(db!=null) db.close();
+    }
+
+    public String generateNewIdentity(Person p, Shadow s) {
+        String info = s.shadowInformation(p);
+        try {
+            String hash = Cryptography.toSHA256(info);
+            return hash;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

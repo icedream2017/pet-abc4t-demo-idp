@@ -182,11 +182,37 @@ public class Identity implements DatabaseController {
         if(db!=null) db.close();
     }
 
-    public String generateNewIdentity(Person p, Shadow s) {
-        String info = s.shadowInformation(p);
+    public static String generateOriginalInfo(Person person, Shadow shadow) {
+        if(person==null||shadow==null) {
+            return null;
+        }
+        String shadowedString = "|";
+        byte mode = shadow.getMode();
+        shadowedString += person.getTitle() + "|";
+        shadowedString += person.getSurname() + "|";
+        shadowedString += person.getGender() + "|";
+        shadowedString += (mode & Shadow.S_TAXID)==64 ? person.getTaxID()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_FIRSTNAME)==32 ? person.getFirstname()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_BIRTHDATE)==16 ? person.getBirthdate()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_ADDRESS)==8 ? person.getAddress()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_EMAIL)==4 ? person.getEmail()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_PHONE)==2 ? person.getPhone()+"|" : "x|";
+        shadowedString += (mode & Shadow.S_DESCRIPTION)==1 ? person.getDescription()+"|" : "x|";
+        return shadowedString;
+    }
+
+    public static String generateNewIdentity(Person person, Shadow shadow) {
         try {
-            String hash = Cryptography.toSHA256(info);
-            return hash;
+            return Cryptography.toSHA256(generateOriginalInfo(person,shadow));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String generateNewIdentity(String originalInfo) {
+        try {
+            return Cryptography.toSHA256(originalInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }

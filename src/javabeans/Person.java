@@ -14,7 +14,7 @@ public class Person implements DatabaseController {
     private String surname = null;
     private String firstname = null;
     private int gender = 0; // 0= female, 1= male
-    private String birthdate = null; // in format YYYYMMDD
+    private String birthdate = null; // in format YYYY/MM/DD
     private String address = null;
     private String email = null;
     private String phone = null;

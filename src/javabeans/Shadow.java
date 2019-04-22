@@ -19,6 +19,15 @@ public class Shadow {
     private boolean phone = false;          // 0000 0010
     private boolean description = false;    // 0000 0001
 
+    public static final byte S_TAXID = 64;
+    public static final byte S_FIRSTNAME = 32;
+    public static final byte S_BIRTHDATE = 16;
+    public static final byte S_ADDRESS = 8;
+    public static final byte S_EMAIL = 4;
+    public static final byte S_PHONE = 2;
+    public static final byte S_DESCRIPTION = 1;
+    public static final byte S_HIDDEN = 0;
+
     //shadow mode in byte
     private byte mode = 0b00000000;
 
@@ -28,16 +37,8 @@ public class Shadow {
     public Shadow() {
     }
 
-    public Shadow(Person p) {
-        this.person = p;
-    }
-
-    public boolean setMode(ShadowMode mode) {
-        return false;
-    }
-
-    public boolean setMode(byte mode) {
-        return true;
+    public Shadow(byte mode) {
+        this.mode = mode;
     }
 
     public String shadowInformation() {
@@ -70,4 +71,11 @@ public class Shadow {
         return shadowedString;
     }
 
+    public byte getMode() {
+        return mode;
+    }
+
+    public void setMode(byte mode) {
+        this.mode = mode;
+    }
 }

@@ -201,6 +201,11 @@ public class User implements DatabaseController {
         return db.update(sql, v, id);
     }
 
+    public int updateType(int type) {
+        String sql = "update idp_users set u_type="+type+" where u_id=?";
+        return db.update(sql, this.uid);
+    }
+
     public boolean changePassword(String id, String oldpw, String newpw) {
         if(identifyUser(id,oldpw)!=-1) {
             String sql = "update idp_users set u_pw=? where u_id=?";
@@ -212,6 +217,12 @@ public class User implements DatabaseController {
             }
         }
         return false;
+    }
+
+    public void saveLoginHistory(int type, String uid, String date, String addr, String comment) {
+        String sql = "insert into idp_log values(null,?,?,?,?,?)";
+        String[] values={String.valueOf(type),uid,date,addr,comment};
+        db.update(sql, values);
     }
 
     @Override

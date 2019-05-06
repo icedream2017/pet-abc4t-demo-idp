@@ -17,59 +17,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <!-- header -->
 <div class="banner">
-    <div class="header">
-        <div class="container">
-            <div class="head-bann">
-                <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" class="img-responsive" alt="" /></a>
-                </div>
-                <div class="head-part">
-                    <ul>
-                        <li><a href="signin.html">sign in</a></li> /
-                        <li><a href="register.html">sign up</a></li>
-                    </ul>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <!-- start h_menu4 -->
-            <div class="h_menu4">
-                <a class="toggleMenu" href="">Menu</a>
-                <ul class="nav">
-                    <li class="active"><a href="index.html">HOME</a></li>
-                    <li><a href="portfolio.html" class="root">PROJECT</a>
-                        <ul class="drdw">
-                            <li><a href="portfolio.html">WEB DESIGN</a></li>
-                            <li><a href="portfolio.html">UI</a></li>
-                            <li><a href="portfolio.html">COMING SOON</a></li>
-                            <li><a href="portfolio.html">BLOG SITE</a></li>
-                            <li><a href="portfolio.html">PORTFOLIO SITE</a></li>
-                            <li><a href="portfolio.html">CORPORATE</a></li>
-                            <li><a href="portfolio.html">BUSINESS</a></li>
-                            <li><a href="portfolio.html">ECOMMERCE</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="products.html" class="root">PRODUCT</a>
-                        <ul class="drdw">
-                            <li><a href="products.html">MOBILE</a></li>
-                            <li><a href="products.html">UI</a></li>
-                            <li><a href="products.html">APPS INTERFACE</a></li>
-                            <li><a href="products.html">BLOG SITE</a></li>
-                            <li><a href="products.html">PORTFOLIO SITE</a></li>
-                            <li><a href="products.html">CORPORATE</a></li>
-                            <li><a href="products.html">BUSINESS</a></li>
-                            <li><a href="products.html">ECOMMERCE</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="blog.html">BLOG</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
-                <script type="text/javascript" src="js/nav.js"></script>
-            </div>
-            <!-- end h_menu4 -->
-        </div>
-    </div>
+    <%@include file="includes/header.jsp" %>
     <div class="banner-info1">
         <div class="banner-col">
         </div>
@@ -84,83 +32,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="login-main">
     <div class="container">
         <div class="register">
-            <form>
+            <form action="register.action" method="post">
                 <div class="register-top-grid">
-                    <h3>PERSONAL INFORMATION</h3>
+                    <h3>LOGIN CREDENTIAL</h3>
                     <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                        <span>First Name<label>*</label></span>
-                        <input type="text">
+                        <span>Username<label>*</label></span>
+                        <input type="text" name="new_username">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Last Name<label>*</label></span>
-                        <input type="text">
+                        <span>Register Code<label>*</label></span>
+                        <input type="text" name="new_rcode">
                     </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Email Address<label>*</label></span>
-                        <input type="text">
-                    </div>
-                    <div class="clearfix"> </div>
-                    <a class="news-letter" href="#">
-                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>
-                    </a>
                 </div>
                 <div class="register-bottom-grid">
-                    <h3>LOGIN INFORMATION</h3>
                     <div class="wow fadeInLeft" data-wow-delay="0.4s">
                         <span>Password<label>*</label></span>
-                        <input type="password">
+                        <input type="password" name="new_password">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
                         <span>Confirm Password<label>*</label></span>
-                        <input type="password">
+                        <input type="password" name="new_password_1">
                     </div>
                 </div>
+                <div class="register-but">
+                    <input type="submit" value="Submit" />
+                </div>
             </form>
-            <div class="clearfix"> </div>
-            <div class="register-but">
-                <form>
-                    <input type="submit" value="submit">
-                    <div class="clearfix"> </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>
 <!-- registration -->
 <!-- footer -->
-<div class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="subsc">
-                <div class="monthly">
-                    <p>Subscribe Our </p>
-                    <h5>Monthly Newsletter </h5>
-                    <p>for Up to Date</p>
-                </div>
-                <div class="mail">
-                    <form>
-                        <input type="text" class="text" value=" Your mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = ' Your mail';}">
-                        <input type="submit" value="SUBMIT">
-                    </form>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-nav">
-                <ul>
-                    <li><a href="index.html">home </a></li> \
-                    <li><a href="portfolio.html">product </a></li> \
-                    <li><a href="contact.html">contact </a></li> \
-                    <li><a href="about.html">about</a></li> \
-                    <li><a href="blog.html">blog</a></li>
-                    <div class="clearfix"> </div>
-                </ul>
-            </div>
-            <p>Copyright &copy; 2016.Company name All rights reserved.</p>
-        </div>
-    </div>
-</div>
+<%@include file="includes/footer.jsp" %>
 <!-- footer -->
 </body>
 </html>

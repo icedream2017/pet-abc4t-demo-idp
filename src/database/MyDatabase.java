@@ -17,7 +17,7 @@ public class MyDatabase {
 
     public MyDatabase() {
         driver="com.mysql.jdbc.Driver";
-        hostname="192.168.72.129";
+        hostname="192.168.108.128";
         port="3306";
         dbname="db_pet_abc4t";
         username="mp_pet_dbuser";

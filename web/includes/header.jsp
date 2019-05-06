@@ -22,22 +22,15 @@
                     <ul class="drdw">
                         <li><a href="account.jsp">My Account</a></li>
                         <li><a href="person.jsp">My Profile</a></li>
-                        <li><a href="resume.jsp">My Resume</a></li>
                         <li><a href="identities.jsp">My Identities</a></li>
-                        <li><a href="keys.jsp">Key Management</a></li>
-                        <li><a href="verify.jsp">Verification</a></li>
+                        <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>
                 <li><a href="products.jsp" class="root">COMPANY</a>
                     <ul class="drdw">
                         <li><a href="products.jsp">Profile</a></li>
                         <li><a href="products.jsp">Application</a></li>
-                        <li><a href="products.jsp">Verification</a></li>
-                        <li><a href="products.jsp">EMPTY</a></li>
-                        <li><a href="products.jsp">EMPTY</a></li>
-                        <li><a href="products.jsp">EMPTY</a></li>
-                        <li><a href="products.jsp">EMPTY</a></li>
-                        <li><a href="products.jsp">EMPTY</a></li>
+                        <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>
                 <li><a href="blog.jsp">BLOG</a></li>

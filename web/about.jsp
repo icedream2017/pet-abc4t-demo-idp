@@ -70,39 +70,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!-- about -->
 <!-- footer -->
-<div class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="subsc">
-                <div class="monthly">
-                    <p>Subscribe Our </p>
-                    <h5>Monthly Newsletter </h5>
-                    <p>for Up to Date</p>
-                </div>
-                <div class="mail">
-                    <form>
-                        <input type="text" class="text" value=" Your mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = ' Your mail';}">
-                        <input type="submit" value="SUBMIT">
-                    </form>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-nav">
-                <ul>
-                    <li><a href="index.html">home </a></li> \
-                    <li><a href="portfolio.html">product </a></li> \
-                    <li><a href="contact.html">contact </a></li> \
-                    <li><a href="about.html">about</a></li> \
-                    <li><a href="blog.html">blog</a></li>
-                    <div class="clearfix"> </div>
-                </ul>
-            </div>
-            <p>Copyright &copy; 2016.Company name All rights reserved.</p>
-        </div>
-    </div>
-</div>
 <%@include file="includes/footer.jsp" %>
 </body>
 </html>

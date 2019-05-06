@@ -23,4 +23,8 @@ public class Test {
         System.out.println("Is Adult?");
         System.out.println(Verification.isAdult(p));
     }
+
+    public static void log(Object object) {
+        System.out.println(object);
+    }
 }

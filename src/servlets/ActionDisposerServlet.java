@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import cryptography.Cryptography;
 import javabeans.Person;
 import javabeans.RegCode;
 import javabeans.User;
@@ -29,10 +30,10 @@ public class ActionDisposerServlet extends HttpServlet {
         Date date = new Date(System.currentTimeMillis());
         DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String addr = request.getRemoteAddr();
-        String cur_username = (String)session.getAttribute("cur_username");
-        String cur_password = (String)session.getAttribute("cur_password");
+        String cur_name = (String)session.getAttribute("cur_name");
+        String cur_pass = (String)session.getAttribute("cur_pass");
         User cur_user = new User();
-        int ut = cur_user.identifyUser(cur_username,cur_password);
+        int ut = cur_user.identifyUser(cur_name,cur_pass);
         cur_user.close();
         //out.print(url);
         out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
@@ -46,16 +47,21 @@ public class ActionDisposerServlet extends HttpServlet {
             flag=1;
             String l_name = request.getParameter("l_name");
             String l_pass = request.getParameter("l_pass");
+            try {
+                l_pass = Cryptography.toSHA256(l_pass);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             //TODO: add identification of username and password from mysql.
             //according to the TYPE of user (user/administrator), switch to different pages.
             User loginuser = new User();
-            int userident=loginuser.identifyUser(l_name,l_pass);
 
-            if(userident!=1)
+            if(loginuser.identifyUser(l_name,l_pass)!=-1 && loginuser.getBanFlag()==0)
             {
-                loginuser.saveLoginHistory(2, loginuser.getUid(), dformat.format(date), addr, "web client login.");
-                session.setAttribute("uid", loginuser.getUid());
-                session.setAttribute("pass", loginuser.getPassword());
+                loginuser.saveLoginHistory(2, loginuser.getUsername(), dformat.format(date), addr, "web client login.");
+                session.setAttribute("cur_uid", loginuser.getUid());
+                session.setAttribute("cur_name", loginuser.getUsername());
+                session.setAttribute("cur_pass", loginuser.getPassword());
                 response.sendRedirect("index.jsp");
             }
             loginuser.close();
@@ -73,11 +79,16 @@ public class ActionDisposerServlet extends HttpServlet {
             String new_firstvisit=dformat.format(date);
             String new_rcode=request.getParameter("new_rcode");
             int res;
+            try {
+                new_password = Cryptography.toSHA256(new_password);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             RegCode rcode = new RegCode();
             if(rcode.getCodeCountById(new_rcode)>0)
             {
                 User nu = new User();
-                String[] values={null,new_username,new_password,new_rcode,"1","0","0"};
+                String[] values={null,new_username,new_password,new_rcode};
                 res = nu.add(values);
                 if(res==1) {
                     rcode.useCode();
@@ -125,14 +136,15 @@ public class ActionDisposerServlet extends HttpServlet {
             String new_bio=request.getParameter("new_bio");
 
             Person np = new Person();
-            String[] values1 = {cur_username,new_tax_id,
+            String[] values1 = {cur_name,new_tax_id,
                     new_title,new_last_name,new_first_name,
                     new_gender,new_birth,new_address,new_email,new_phone,new_bio};
             int resp = np.add(values1);
             if(resp==1) {
                 User cu = new User();
-                cu.identifyUser(cur_username,cur_password);
+                cu.identifyUser(cur_name,cur_pass);
                 cu.updateType(1);
+                cu.activeUser(true);
                 out.println("Personal information registered successful!<br>You can now create your first identity.<br>");
                 out.println("<a href='login.jsp'>RETURN</a>");
 //                ut = 0;
@@ -169,10 +181,11 @@ public class ActionDisposerServlet extends HttpServlet {
         Date date = new Date(System.currentTimeMillis());
         DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String addr = request.getRemoteAddr();
-        String cur_uid = (String)session.getAttribute("uid");
-        String cur_pass = (String)session.getAttribute("pass");
+        String cur_uid = (String)session.getAttribute("cur_uid");
+        String cur_name = (String)session.getAttribute("cur_name");
+        String cur_pass = (String)session.getAttribute("cur_pass");
         User cur_user = new User();
-        int ut = cur_user.identifyUser(cur_uid,cur_pass);
+        int ut = cur_user.identifyUser(cur_name,cur_pass);
         cur_user.close();
         //out.print(url);
         out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
@@ -187,6 +200,20 @@ public class ActionDisposerServlet extends HttpServlet {
             out.println("Sorry, it seems that you are not signed in.<br>");
             out.println("<a href='index.jsp'>Return</a>");
             out.println("<a href='login.jsp'>Sign in</a>");
+        }
+
+        if(url.equals("/logout.action"))
+        {
+            flag=1;
+            session.invalidate();
+            out.println("Log out successful!<br>");
+            out.println("<a href='index.jsp'>RETURN</a>");
+        }
+
+        if(flag==0)
+        {
+            out.println("Error, wrong operation!<br>");
+            out.println("<a href='index.jsp'>RETURN</a>");
         }
 
         out.print("</center>");

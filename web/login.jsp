@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register</title>
+    <title>sign in</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,42 +34,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
 </div>
 <!-- header -->
-<!-- registration -->
-<div class="login-main">
-    <div class="container">
-        <div class="register">
-            <form action="register.action" method="post">
-                <div class="register-top-grid">
-                    <h3>LOGIN CREDENTIAL</h3>
-                    <div class="wow fadeInLeft" data-wow-delay="0.4s">
+<!--- start-content---->
+<div class="content login-box">
+    <div class="login-main">
+        <div class="container">
+            <h1>LOGIN OR CREATE AN ACCOUNT</h1>
+            <div class="login-left">
+                <h3>NEW CUSTOMERS</h3>
+                <p>By creating an account with our site, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                <a class="acount-btn" href="register.jsp">Create an Account</a>
+            </div>
+            <div class="login-right">
+                <h3>REGISTERED CUSTOMERS</h3>
+                <p>If you have an account with us, please log in.</p>
+                <form action="login.action" method="post">
+                    <div>
                         <span>Username<label>*</label></span>
-                        <input type="text" name="new_username">
+                        <input type="text" name="l_name">
                     </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Register Code<label>*</label></span>
-                        <input type="text" name="new_rcode">
-                    </div>
-                </div>
-                <div class="register-bottom-grid">
-                    <div class="wow fadeInLeft" data-wow-delay="0.4s">
+                    <div>
                         <span>Password<label>*</label></span>
-                        <input type="password" name="new_password">
+                        <input type="password" name="l_pass">
                     </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Confirm Password<label>*</label></span>
-                        <input type="password" name="new_password_1">
-                    </div>
-                </div>
-                <div class="register-but">
-                    <input type="submit" value="Submit" />
-                </div>
-            </form>
+                    <a class="forgot" href="#">Forgot Your Password?</a>
+                    <input type="submit" value="Login" />
+                </form>
+            </div>
+            <div class="clear"> </div>
         </div>
     </div>
 </div>
-<!-- registration -->
 <!-- footer -->
 <%@include file="includes/footer.jsp" %>
-<!-- footer -->
 </body>
 </html>

@@ -174,7 +174,7 @@ public class Person implements DatabaseController {
 
     @Override
     public boolean getElementById(String id) {
-        String sql = "select * from idp_persons where u_id=?";
+        String sql = "select * from idp_persons where u_name=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();
@@ -199,13 +199,13 @@ public class Person implements DatabaseController {
 
     @Override
     public int add(String v[]) {
-        String sql = "insert into idp_persons values(?,?,?,?,?,0,?,?,?,?,?)";
+        String sql = "insert into idp_persons values(?,?,?,?,?,?,?,?,?,?,?)";
         return db.update(sql, v);
     }
 
     @Override
     public int delete(String id) {
-        String sql = "delete from idp_persons where p_id=?";
+        String sql = "delete from idp_persons where u_name=?";
         return db.update(sql, id);
     }
 

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register</title>
+    <title>Person Register</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +18,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- header -->
 <div class="banner">
     <%@include file="includes/header.jsp" %>
+    <!-- check user signing status and active flag -->
+    <%
+        if (current_user_type==-1) {  // if user is not signed in
+            response.sendRedirect("login.jsp");
+        } else if (current_user_isActive) {  // if user has already activated
+            response.sendRedirect("person.jsp");
+        } else if (current_user_type!=1 && current_user_isActive) {  // if user is not a personal user
+            response.sendRedirect("index.jsp");
+        }
+    %>
     <div class="banner-info1">
         <div class="banner-col">
         </div>
@@ -34,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="register">
             <form action="register-personal.action" method="post">
                 <div class="register-top-grid">
-                    <h3>PERSONAL INFORMATION</h3>
+                    <h3>PLEASE REGISTER YOUR PERSONAL INFORMATION FIRST</h3>
                     <div class="wow fadeInLeft" data-wow-delay="0.4s">
                         <span>First Name<label>*</label></span>
                         <input type="text" name="new_first_name">

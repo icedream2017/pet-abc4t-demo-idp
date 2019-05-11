@@ -1,7 +1,8 @@
+<%@ page import="javabeans.Person" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>portfolio</title>
+    <title>Person</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +30,16 @@
 <!-- header -->
 <div class="banner">
     <%@include file="includes/header.jsp" %>
+    <!-- check user signing status and active flag -->
+    <%
+        if (current_user_type==-1) {  // if user is not signed in
+            response.sendRedirect("login.jsp");
+        } else if (!current_user_isActive) {  // if user has not registered person
+            response.sendRedirect("register-personal.jsp");
+        } else if (current_user_type!=1 && current_user_isActive) {  // if user is not a personal user
+            response.sendRedirect("index.jsp");
+        }
+    %>
     <div class="banner-info1">
         <div class="banner-col">
         </div>
@@ -40,192 +51,69 @@
 </div>
 <!-- header -->
 <div class="projects">
+    <%
+        Person p = new Person();
+        boolean flag = true;
+        if(!p.getElementById(cur_name)) {
+            flag = false;
+            p.close();
+        }
+        p.close();
+    %>
     <div class="products-section">
         <div class="container">
-            <h2>PROJECT/<span>all</span></h2>
-            <script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#horizontalTab').easyResponsiveTabs({
-                        type: 'default', //Types: default, vertical, accordion
-                        width: 'auto', //auto or any width like 600px
-                        fit: true   // 100% fit in a container
-                    });
-                });
-
-            </script>
-            <link rel="stylesheet" href="css/swipebox.css">
-            <script src="js/jquery.swipebox.min.js"></script>
-            <script type="text/javascript">
-                jQuery(function($) {
-                    $(".swipebox").swipebox();
-                });
-            </script>
-            <!-- Portfolio Ends Here -->
-            <div class="sap_tabs">
-                <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
-                    <ul class="resp-tabs-list">
-                        <li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>mobile apps</span></li>
-                        <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>web design</span></li>
-                        <li class="resp-tab-item" aria-controls="tab_item-2" role="tab"><span>ios ui</span></li>
-                        <li class="resp-tab-item" aria-controls="tab_item-3" role="tab"><span>ANDROID UI</span></li>
-                        <div class="clearfix"></div>
-                    </ul>
-                    <div class="resp-tabs-container">
-                        <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
-                            <div class="tab_img">
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/3.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/3.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/4.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/4.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/5.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/5.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/6.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/6.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/5.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/5.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/3.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/3.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/6.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/6.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/4.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/4.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-
-                        </div>
-                        <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
-                            <div class="tab_img">
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/3.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/3.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/6.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/6.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/4.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/4.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
-                            <div class="tab_img">
-
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/4.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/4.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/5.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/5.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-3">
-                            <div class="tab_img">
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/3.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/3.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/4.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/4.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 img-top ">
-                                    <a href="images/5.jpg" rel="title" class="b-link-stripe b-animate-go  swipebox">
-                                        <img src="images/5.jpg" class="img-responsive" alt=""/>
-                                        <div class="link-top">
-                                            <i class="link"> </i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+            <h2>PERSONAL INFORMATION</h2>
+            <div>
+                <% if (flag) { %>
+                <table width="90%" align="center" border=1>
+                    <tr>
+                        <td width="20%">Username</td>
+                        <td width="80%"><%=p.getUid()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Tax ID</td>
+                        <td width="80%"><%=p.getTaxID()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Title</td>
+                        <td width="80%"><%=p.getTitle()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Last Name</td>
+                        <td width="80%"><%=p.getSurname()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">First Name</td>
+                        <td width="80%"><%=p.getFirstname()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Gender</td>
+                        <td width="80%"><%=p.getGender()==1?"Male":"Female"%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Birth Date</td>
+                        <td width="80%"><%=p.getBirthdate()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Home Address</td>
+                        <td width="80%"><%=p.getAddress()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Email</td>
+                        <td width="80%"><%=p.getEmail()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Phone Nr.</td>
+                        <td width="80%"><%=p.getPhone()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Bio</td>
+                        <td width="80%"><%=p.getDescription()%></td>
+                    </tr>
+                </table>
+                <%} else { %>
+                    <p>Personal information unavailable.</p>
+                <%} %>
             </div>
         </div>
     </div>

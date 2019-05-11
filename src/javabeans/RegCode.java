@@ -13,7 +13,7 @@ public class RegCode {
     private MyDatabase db = null;
 	/*
 	CREATE TABLE 'idp_regcode' (
-	r_id char(10) not null,
+	r_id char(20) not null,
 	r_count int not null default 1,
 	PRIMARY KEY (r_id)
 	)

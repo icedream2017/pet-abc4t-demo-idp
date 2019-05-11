@@ -159,11 +159,11 @@ public class User implements DatabaseController {
     }
 
     public int identifyUser(String id, String pw) {
-        String sql = "select * from idp_users where u_id=?";
+        String sql = "select * from idp_users where u_name=?";
         ResultSet rs=db.getSelect(sql, new String[]{id});
         try {
             if(rs.next()) {
-                if(rs.getString(1).equals(id)&&rs.getString(2).equals(pw)) {
+                if(rs.getString(2).equals(id)&&rs.getString(3).equals(pw)) {
                     this.setAll(
                             rs.getString(1),
                             rs.getString(2),
@@ -190,7 +190,7 @@ public class User implements DatabaseController {
 
     @Override
     public int delete(String id) {
-        String sql="delete from idp_users where u_id=?";
+        String sql="delete from idp_users where u_name=?";
         return db.update(sql, id);
     }
 
@@ -202,13 +202,18 @@ public class User implements DatabaseController {
     }
 
     public int updateType(int type) {
-        String sql = "update idp_users set u_type="+type+" where u_id=?";
-        return db.update(sql, this.uid);
+        String sql = "update idp_users set u_type="+type+" where u_name=?";
+        return db.update(sql, this.username);
+    }
+
+    public int activeUser(boolean active) {
+        String sql = "update idp_users set u_activeflag="+(active?"1":"0")+" where u_name=?";
+        return db.update(sql, this.username);
     }
 
     public boolean changePassword(String id, String oldpw, String newpw) {
         if(identifyUser(id,oldpw)!=-1) {
-            String sql = "update idp_users set u_pw=? where u_id=?";
+            String sql = "update idp_users set u_pw=? where u_name=?";
             int res = db.update(sql, new String[]{newpw}, id);
             if(res==1) {
                 return true;

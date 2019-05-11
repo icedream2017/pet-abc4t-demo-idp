@@ -1,14 +1,31 @@
+<%@ page import="javabeans.User" %>
 <div class="header">
+    <%
+        User cur_user = new User();
+        String cur_uid = (String)session.getAttribute("cur_uid");
+        String cur_name = (String)session.getAttribute("cur_name");
+        String cur_pass = (String)session.getAttribute("cur_pass");
+        int current_user_type = cur_user.identifyUser(cur_name,cur_pass);
+        boolean current_user_isActive = cur_user.getActiveFlag()==1;
+        cur_user.close();
+    %>
     <div class="container">
         <div class="head-bann">
             <div class="logo">
                 <a href="index.jsp"><img src="images/logo.png" width="200" height="68" class="img-responsive" alt="" /></a>
             </div>
             <div class="head-part">
+                <% if(current_user_type == -1) { %>
                 <ul>
-                    <li><a href="signin.jsp">sign in</a></li> /
+                    <li><a href="login.jsp">sign in</a></li> /
                     <li><a href="register.jsp">sign up</a></li>
                 </ul>
+                <% } else {%>
+                <ul>
+                    <li>Welcome, <%=cur_name%></li> /
+                    <li><a href="logout.action">sign out</a></li>
+                </ul>
+                <% }%>
                 <div class="clearfix"> </div>
             </div>
             <div class="clearfix"> </div>
@@ -20,16 +37,16 @@
                 <li class="active"><a href="index.jsp">HOME</a></li>
                 <li><a href="person.jsp" class="root">PERSON</a>
                     <ul class="drdw">
-                        <li><a href="account.jsp">My Account</a></li>
                         <li><a href="person.jsp">My Profile</a></li>
                         <li><a href="identities.jsp">My Identities</a></li>
+                        <li><a href="index.jsp">My Account</a></li>
                         <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>
-                <li><a href="products.jsp" class="root">COMPANY</a>
+                <li><a href="enterprise.jsp" class="root">COMPANY</a>
                     <ul class="drdw">
-                        <li><a href="products.jsp">Profile</a></li>
-                        <li><a href="products.jsp">Application</a></li>
+                        <li><a href="enterprise.jsp">Profile</a></li>
+                        <li><a href="index.jsp">Application</a></li>
                         <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>

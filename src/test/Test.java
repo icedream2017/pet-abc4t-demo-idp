@@ -10,7 +10,7 @@ public class Test {
         Person p = new Person("test","1234567890",null,"Potter","Harry",1,
                 "1999/04/22","Hogwarts Street 1",
                 "harry.potter@hogwarts.com","+441234567890","I am test data.");
-        byte shadowMode = Shadow.S_FIRSTNAME | Shadow.S_ADDRESS | Shadow.S_EMAIL | Shadow.S_BIRTHDATE;
+        byte shadowMode = Shadow.FIRSTNAME | Shadow.ADDRESS | Shadow.EMAIL | Shadow.BIRTHDATE;
         Shadow s = new Shadow(shadowMode);
         String plainInfo = Identity.generateOriginalInfo(p,s);
         System.out.println("original info: ");

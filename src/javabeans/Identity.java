@@ -191,13 +191,13 @@ public class Identity implements DatabaseController {
         shadowedString += person.getTitle() + "|";
         shadowedString += person.getSurname() + "|";
         shadowedString += person.getGender() + "|";
-        shadowedString += (mode & Shadow.S_TAXID)==64 ? person.getTaxID()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_FIRSTNAME)==32 ? person.getFirstname()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_BIRTHDATE)==16 ? person.getBirthdate()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_ADDRESS)==8 ? person.getAddress()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_EMAIL)==4 ? person.getEmail()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_PHONE)==2 ? person.getPhone()+"|" : "x|";
-        shadowedString += (mode & Shadow.S_DESCRIPTION)==1 ? person.getDescription()+"|" : "x|";
+        shadowedString += (mode & Shadow.TAXID)==64 ? person.getTaxID()+"|" : "x|";
+        shadowedString += (mode & Shadow.FIRSTNAME)==32 ? person.getFirstname()+"|" : "x|";
+        shadowedString += (mode & Shadow.BIRTHDATE)==16 ? person.getBirthdate()+"|" : "x|";
+        shadowedString += (mode & Shadow.ADDRESS)==8 ? person.getAddress()+"|" : "x|";
+        shadowedString += (mode & Shadow.EMAIL)==4 ? person.getEmail()+"|" : "x|";
+        shadowedString += (mode & Shadow.PHONE)==2 ? person.getPhone()+"|" : "x|";
+        shadowedString += (mode & Shadow.DESCRIPTION)==1 ? person.getDescription()+"|" : "x|";
         return shadowedString;
     }
 

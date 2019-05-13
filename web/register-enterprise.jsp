@@ -22,8 +22,8 @@
         if (current_user_type==-1) {  // if user is not signed in
             response.sendRedirect("login.jsp");
         } else if (current_user_isActive) {  // if user has already activated
-            response.sendRedirect("person.jsp");
-        } else if (current_user_type!=1 && current_user_isActive) {  // if user is not a personal user
+            response.sendRedirect("enterprise.jsp");
+        } else if (current_user_type!=2 && current_user_isActive) {  // if user is not a personal user
             response.sendRedirect("index.jsp");
         }
     %>
@@ -41,56 +41,40 @@
 <div class="login-main">
     <div class="container">
         <div class="register">
-            <form action="register-personal.action" method="post">
+            <form action="register-enterprise.action" method="post">
                 <div class="register-top-grid">
-                    <h3>PLEASE REGISTER YOUR PERSONAL INFORMATION FIRST</h3>
+                    <h3>PLEASE REGISTER YOUR COMPANY INFORMATION FIRST</h3>
                     <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                        <span>First Name<label>*</label></span>
-                        <input type="text" name="new_first_name">
+                        <span>Company Name<label>*</label></span>
+                        <input type="text" name="new_company_name">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Last Name<label>*</label></span>
-                        <input type="text" name="new_last_name">
+                        <span>Manager Name<label>*</label></span>
+                        <input type="text" name="new_manager_name">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Title<label>.</label></span>
-                        <input type="radio" name="new_title" value="" checked> (Empty) /
-                        <input type="radio" name="new_title" value="Mr." > Mr. /
-                        <input type="radio" name="new_title" value="Mrs." > Mrs. /
-                        <input type="radio" name="new_title" value="Ms." > Ms. /
-                        <input type="radio" name="new_title" value="Dr." > Dr. /
-                        <input type="radio" name="new_title" value="Prof." > Prof. /
-                        <input type="radio" name="new_title" value="Assoc Prof." > Assoc Prof.
+                        <span>Website<label>*</label></span>
+                        <input type="text" name="new_website">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Gender<label>*</label></span>
-                        <input type="radio" name="new_gender" value="1" checked> Male /
-                        <input type="radio" name="new_gender" value="0"> Female
-                    </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Tax ID<label>*</label></span>
-                        <input type="text" name="new_tax_id">
-                    </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Email Address<label>*</label></span>
-                        <input type="text" name="new_email">
-                    </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Phone<label>*</label></span>
-                        <input type="text" name="new_phone">
+                        <span>Date of Found<label>*</label></span>
+                        <input type="text" name="new_found_date">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
                         <span>Address<label>*</label></span>
                         <input type="text" name="new_address">
                     </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span>Birthdate<label>*</label></span>
-                        <input type="text" name="new_birth">
+                        <span>Email Address<label>*</label></span>
+                        <input type="text" name="new_email">
                     </div>
-
+                    <div class="wow fadeInRight" data-wow-delay="0.4s">
+                        <span>Phone Nr.<label>*</label></span>
+                        <input type="text" name="new_phone">
+                    </div>
                     <div class="wow fadeInRight" data-wow-delay="0.4s">
                         <span>Description<label>.</label></span>
-                        <input type="text" name="new_bio">
+                        <input type="text" name="new_description">
                     </div>
                 </div>
 

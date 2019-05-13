@@ -13,9 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import cryptography.Cryptography;
-import javabeans.Person;
-import javabeans.RegCode;
-import javabeans.User;
+import javabeans.*;
 
 @WebServlet(name = "ActionDisposerServlet")
 public class ActionDisposerServlet extends HttpServlet {
@@ -67,7 +65,7 @@ public class ActionDisposerServlet extends HttpServlet {
             loginuser.close();
             ut=0;
             out.println("Wrong user name or password.<br>");
-            out.println("<a href='login.jsp'>RETURN</a>");
+            out.println("<a href='login.jsp'>RETURN</a><br>");
         }
 
         if(url.equals("/register.action"))
@@ -85,8 +83,7 @@ public class ActionDisposerServlet extends HttpServlet {
                 e.printStackTrace();
             }
             RegCode rcode = new RegCode();
-            if(rcode.getCodeCountById(new_rcode)>0)
-            {
+            if(rcode.getCodeCountById(new_rcode)>0) {
                 User nu = new User();
                 String[] values={null,new_username,new_password,new_rcode};
                 res = nu.add(values);
@@ -94,19 +91,17 @@ public class ActionDisposerServlet extends HttpServlet {
                     rcode.useCode();
                     nu.saveLoginHistory(1, new_username, new_firstvisit, addr, "new user registered.");
                     out.println("Registration successful!<br>");
-                    out.println("<a href='login.jsp'>RETURN</a>");
+                    out.println("<a href='login.jsp'>RETURN</a><br>");
                     ut=0;
                 } else {
                     out.println("Registration failed!<br>");
-                    out.println("<a href='register.jsp'>RETURN</a>");
+                    out.println("<a href='register.jsp'>RETURN</a><br>");
                     ut=0;
                 }
                 nu.close();
-            }
-            else
-            {
+            } else {
                 out.println("Wrong registration code!<br>");
-                out.println("<a href='register.jsp'>RETURN</a>");
+                out.println("<a href='register.jsp'>RETURN</a><br>");
                 ut=0;
             }
             rcode.close();
@@ -124,43 +119,132 @@ public class ActionDisposerServlet extends HttpServlet {
         {
             flag=1;
 
-            String new_first_name=request.getParameter("new_first_name");
-            String new_last_name=request.getParameter("new_last_name");
-            String new_title=request.getParameter("new_title");
-            String new_tax_id=request.getParameter("new_tax_id");
-            String new_email=request.getParameter("new_email");
-            String new_phone=request.getParameter("new_phone");
-            String new_address=request.getParameter("new_address");
-            String new_birth=request.getParameter("new_birth");
-            String new_gender=request.getParameter("new_gender");
-            String new_bio=request.getParameter("new_bio");
+            if(cur_user.getActiveFlag()==0) {
+                String new_first_name=request.getParameter("new_first_name");
+                String new_last_name=request.getParameter("new_last_name");
+                String new_title=request.getParameter("new_title");
+                String new_tax_id=request.getParameter("new_tax_id");
+                String new_email=request.getParameter("new_email");
+                String new_phone=request.getParameter("new_phone");
+                String new_address=request.getParameter("new_address");
+                String new_birth=request.getParameter("new_birth");
+                String new_gender=request.getParameter("new_gender");
+                String new_bio=request.getParameter("new_bio");
 
-            Person np = new Person();
-            String[] values1 = {cur_name,new_tax_id,
-                    new_title,new_last_name,new_first_name,
-                    new_gender,new_birth,new_address,new_email,new_phone,new_bio};
-            int resp = np.add(values1);
-            if(resp==1) {
-                User cu = new User();
-                cu.identifyUser(cur_name,cur_pass);
-                cu.updateType(1);
-                cu.activeUser(true);
-                out.println("Personal information registered successful!<br>You can now create your first identity.<br>");
-                out.println("<a href='login.jsp'>RETURN</a>");
-//                ut = 0;
-                cu.close();
+                Person np = new Person();
+                String[] values1 = {null,cur_name,new_tax_id,
+                        new_title,new_last_name,new_first_name,
+                        new_gender,new_birth,new_address,new_email,new_phone,new_bio};
+                int resp = np.add(values1);
+                if(resp==1) {
+                    User cu = new User();
+                    cu.identifyUser(cur_name,cur_pass);
+                    cu.updateType(1);
+                    cu.activeUser(true);
+                    cu.saveLoginHistory(3,cur_name,dformat.format(date),addr,"personal information added.");
+                    out.println("Personal information registered successful!<br>You can now create your first identity.<br>");
+                    out.println("<a href='person.jsp'>RETURN</a><br>");
+                    cu.close();
+                } else {
+                    out.println("Register failed, please check your input.<br>");
+                    out.println("<a href='register-personal.jsp'>RETURN</a><br>");
+                }
+                np.close();
             } else {
-                out.println("Register failed, please check your input.<br>");
-                out.println("<a href='register.jsp'>RETURN</a>");
-//                ut = 0;
+                out.println("Register failed. Information already exists.<br>");
+                out.println("<a href='person.jsp'>RETURN</a><br>");
             }
-            np.close();
+        }
+
+        if(url.equals("/register-enterprise.action"))
+        {
+            flag=1;
+
+            if(cur_user.getActiveFlag()==0) {
+                String new_company_name=request.getParameter("new_company_name");
+                String new_manager_name=request.getParameter("new_manager_name");
+                String new_website=request.getParameter("new_website");
+                String new_found_date=request.getParameter("new_found_date");
+                String new_address=request.getParameter("new_address");
+                String new_email=request.getParameter("new_email");
+                String new_phone=request.getParameter("new_phone");
+                String new_description=request.getParameter("new_description");
+
+                Enterprise np = new Enterprise();
+                String[] values1 = {null,cur_name,new_company_name,new_manager_name,
+                        new_website,new_found_date,new_address,new_email,new_phone,new_description};
+                int resp = np.add(values1);
+                if(resp==1) {
+                    User cu = new User();
+                    cu.identifyUser(cur_name,cur_pass);
+                    cu.updateType(2);
+                    cu.activeUser(true);
+                    cu.saveLoginHistory(3,cur_name,dformat.format(date),addr,"enterprise information added.");
+                    out.println("Enterprise information registered successful!<br>");
+                    out.println("<a href='enterprise.jsp'>RETURN</a><br>");
+                    cu.close();
+                } else {
+                    out.println("Register failed, please check your input.<br>");
+                    out.println("<a href='register-enterprise.jsp'>RETURN</a><br>");
+                }
+                np.close();
+            } else {
+                out.println("Register failed. Information already exists.<br>");
+                out.println("<a href='enterprise.jsp'>RETURN</a><br>");
+            }
+        }
+
+        if(url.equals("/register-identity.action"))
+        {
+            flag=1;
+
+            if(cur_user.getActiveFlag()==1 && cur_user.getType()!=0) {
+                String newid_purpose=request.getParameter("newid_purpose");
+                byte newid_mask1=Byte.parseByte(request.getParameter("newid_mask1"));
+                byte newid_mask2=Byte.parseByte(request.getParameter("newid_mask2"));
+                byte newid_mask3=Byte.parseByte(request.getParameter("newid_mask3"));
+                byte newid_mask4=Byte.parseByte(request.getParameter("newid_mask4"));
+                byte newid_mask5=Byte.parseByte(request.getParameter("newid_mask5"));
+                byte newid_mask6=Byte.parseByte(request.getParameter("newid_mask6"));
+                byte newid_mask7=Byte.parseByte(request.getParameter("newid_mask7"));
+                String verify_password=request.getParameter("verify_password");
+
+                byte newid_mask = (byte)(newid_mask1|newid_mask2|newid_mask3|newid_mask4|newid_mask5|newid_mask6|newid_mask7);
+
+                Person cp = new Person();
+                boolean isPersonAvailable = cp.getElementById(cur_name);
+                cp.close();
+
+                Identity np = new Identity();
+                String newid_hashcode = Identity.generateNewIdentity(cp,new Shadow(newid_mask));
+                String[] values1 = {null,cur_name,newid_hashcode,newid_purpose,null,null,Integer.toString(newid_mask)};
+
+                if(np.add(values1)==1) {
+                    User cu = new User();
+                    if(cu.identifyUser(cur_name,verify_password)!=-1) {
+                        cu.saveLoginHistory(3,cur_name,dformat.format(date),addr,"new identity created.");
+                        out.println("New identity created successful!<br>");
+                        out.println("<a href='identities.jsp'>RETURN</a><br>");
+                    } else {
+                        out.println("Failed to verify user password!<br>");
+                        out.println("<a href='index.jsp'>RETURN</a><br>");
+                    }
+                    cu.close();
+                } else {
+                    out.println("Register failed, please check your input.<br>");
+                    out.println("<a href='identity-add.jsp'>RETURN</a><br>");
+                }
+                np.close();
+            } else {
+                out.println("Current user is not activated.<br>Please register your personal info first.<br>");
+                out.println("<a href='index.jsp'>RETURN</a><br>");
+            }
         }
 
         if(flag==0)
         {
             out.println("Error, wrong operation!<br>");
-            out.println("<a href='index.jsp'>RETURN</a>");
+            out.println("<a href='index.jsp'>RETURN</a><br>");
         }
 
         out.print("</center>");
@@ -199,7 +283,7 @@ public class ActionDisposerServlet extends HttpServlet {
         {
             out.println("Sorry, it seems that you are not signed in.<br>");
             out.println("<a href='index.jsp'>Return</a>");
-            out.println("<a href='login.jsp'>Sign in</a>");
+            out.println("<a href='login.jsp'>Sign in</a><br>");
         }
 
         if(url.equals("/logout.action"))
@@ -207,13 +291,13 @@ public class ActionDisposerServlet extends HttpServlet {
             flag=1;
             session.invalidate();
             out.println("Log out successful!<br>");
-            out.println("<a href='index.jsp'>RETURN</a>");
+            out.println("<a href='index.jsp'>RETURN</a><br>");
         }
 
         if(flag==0)
         {
             out.println("Error, wrong operation!<br>");
-            out.println("<a href='index.jsp'>RETURN</a>");
+            out.println("<a href='index.jsp'>RETURN</a><br>");
         }
 
         out.print("</center>");

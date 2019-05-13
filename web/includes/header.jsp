@@ -39,7 +39,7 @@
                     <ul class="drdw">
                         <li><a href="person.jsp">My Profile</a></li>
                         <li><a href="identities.jsp">My Identities</a></li>
-                        <li><a href="index.jsp">My Account</a></li>
+                        <li><a href="identity-add.jsp">New Identity</a></li>
                         <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>

@@ -27,7 +27,7 @@ public class Verification {
     public static boolean isAdult(Person p) {
         Calendar current = Calendar.getInstance();
         Calendar birthDay = Calendar.getInstance();
-        birthDay.setTime(new Date(p.getBirthdate()));
+        birthDay.setTime(new Date(p.getBirthdate().replace('-','/')));
 
         int year = current.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
         if (year > 18) {

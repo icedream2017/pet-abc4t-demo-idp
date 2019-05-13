@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//@SuppressWarnings("All")
 public class Person implements DatabaseController {
+    private String pid = null;
     private String uid = null; // FK to class User
     private String taxID = null; // tax ID for a person
     private String title = null;
@@ -26,8 +28,9 @@ public class Person implements DatabaseController {
         this.db = new MyDatabase();
     }
 
-    public Person(String uid, String taxID, String title, String surname, String firstname,
+    public Person(String pid, String uid, String taxID, String title, String surname, String firstname,
                   int gender, String birthdate, String address, String email, String phone, String description) {
+        this.pid = pid;
         this.uid = uid;
         this.taxID = taxID;
         this.title = title;
@@ -41,8 +44,9 @@ public class Person implements DatabaseController {
         this.description = description;
     }
 
-    public void setAll(String uid, String taxID, String title, String surname, String firstname,
+    public void setAll(String pid, String uid, String taxID, String title, String surname, String firstname,
                        int gender, String birthdate, String address, String email, String phone, String description) {
+        this.pid = pid;
         this.uid = uid;
         this.taxID = taxID;
         this.title = title;
@@ -54,6 +58,14 @@ public class Person implements DatabaseController {
         this.email = email;
         this.phone = phone;
         this.description = description;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public String getUid() {
@@ -144,9 +156,10 @@ public class Person implements DatabaseController {
         this.description = description;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public ArrayList<Person> getAllElements() {
-        ArrayList<Person> persons = new ArrayList<Person>();
+        ArrayList<Person> persons = new ArrayList<>();
         String sql = "select * from idp_persons";
         ResultSet rs = db.getSelect(sql);
         try {
@@ -157,12 +170,13 @@ public class Person implements DatabaseController {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
-                        rs.getString(7),
-                        rs.getString(8),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8).substring(0,10),
                         rs.getString(9),
                         rs.getString(10),
-                        rs.getString(11));
+                        rs.getString(11),
+                        rs.getString(12));
                 persons.add(p);
             }
             rs.close();
@@ -172,6 +186,7 @@ public class Person implements DatabaseController {
         return persons;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public boolean getElementById(String id) {
         String sql = "select * from idp_persons where u_name=?";
@@ -184,12 +199,13 @@ public class Person implements DatabaseController {
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getInt(6),
-                    rs.getString(7),
-                    rs.getString(8),
+                    rs.getString(6),
+                    rs.getInt(7),
+                    rs.getString(8).substring(0,10),
                     rs.getString(9),
                     rs.getString(10),
-                    rs.getString(11));
+                    rs.getString(11),
+                    rs.getString(12));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,7 +215,7 @@ public class Person implements DatabaseController {
 
     @Override
     public int add(String v[]) {
-        String sql = "insert into idp_persons values(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into idp_persons values(?,?,?,?,?,?,?,?,?,?,?,?)";
         return db.update(sql, v);
     }
 

@@ -8,7 +8,7 @@ import database.MyDatabase;
 
 public class LoginHistory {
     private int hid=0;
-    private int type=0;
+    private int type=0; // 1= new user; 2= login; 3= new personal info;
     private String uid=null;
     private String addr=null;
     private String comment=null;

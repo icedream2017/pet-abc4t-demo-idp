@@ -6,8 +6,7 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="4useri Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+    <meta name="keywords" content="pet identity provider" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Alice' rel='stylesheet' type='text/css'>
@@ -41,12 +40,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <h1>LOGIN OR CREATE AN ACCOUNT</h1>
             <div class="login-left">
                 <h3>NEW CUSTOMERS</h3>
-                <p>By creating an account with our site, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                <p>By creating an account with our site, you will be able to manage your personal information, create your identities for different sites, and manage your privacy option in your account and more.</p>
                 <a class="acount-btn" href="register.jsp">Create an Account</a>
             </div>
             <div class="login-right">
                 <h3>REGISTERED CUSTOMERS</h3>
-                <p>If you have an account with us, please log in.</p>
+                <p>If you have an account, please log in.</p>
                 <form action="login.action" method="post">
                     <div>
                         <span>Username<label>*</label></span>

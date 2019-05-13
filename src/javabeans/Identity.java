@@ -9,13 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Identity implements DatabaseController {
-    private String uid = null;
     private String iid = null;
+    private String uid = null;
     private String hashcode = null;
     private String purpose = null;
     private String pubkey = null;
     private String privkey = null;
-    // private int permission = 0x00;
+    private byte mask = 0x00;
 
     private MyDatabase db = null;
 
@@ -23,24 +23,26 @@ public class Identity implements DatabaseController {
         this.db = new MyDatabase();
     }
 
-    public Identity(String uid, String iid, String hashcode,
-                    String purpose, String pubkey, String privkey) {
-        this.uid = uid;
+    public Identity(String iid, String uid, String hashcode,
+                    String purpose, String pubkey, String privkey, byte mask) {
         this.iid = iid;
+        this.uid = uid;
         this.hashcode = hashcode;
         this.purpose = purpose;
         this.pubkey = pubkey;
         this.privkey = privkey;
+        this.mask = mask;
     }
 
-    public void setAll(String uid, String iid, String hashcode,
-                       String purpose, String pubkey, String privkey) {
-        this.uid = uid;
+    public void setAll(String iid, String uid, String hashcode,
+                       String purpose, String pubkey, String privkey, byte mask) {
         this.iid = iid;
+        this.uid = uid;
         this.hashcode = hashcode;
         this.purpose = purpose;
         this.pubkey = pubkey;
         this.privkey = privkey;
+        this.mask = mask;
     }
 
     public String getUid() {
@@ -91,10 +93,18 @@ public class Identity implements DatabaseController {
         this.privkey = privkey;
     }
 
+    public byte getMask() {
+        return mask;
+    }
+
+    public void setMask(byte mask) {
+        this.mask = mask;
+    }
+
     @SuppressWarnings("Duplicates")
     @Override
     public ArrayList<Identity> getAllElements() {
-        ArrayList<Identity> identities = new ArrayList<Identity>();
+        ArrayList<Identity> identities = new ArrayList<>();
         String sql="select * from idp_identities";
         ResultSet rs = db.getSelect(sql);
         try {
@@ -105,7 +115,8 @@ public class Identity implements DatabaseController {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6));
+                        rs.getString(6),
+                        rs.getByte(7));
                 identities.add(i);
             }
             rs.close();
@@ -117,8 +128,8 @@ public class Identity implements DatabaseController {
 
     @SuppressWarnings("Duplicates")
     public ArrayList<Identity> getIdentitiesByUid(String uid) {
-        ArrayList<Identity> identities = new ArrayList<Identity>();
-        String sql="select * from idp_identities where u_id=?";
+        ArrayList<Identity> identities = new ArrayList<>();
+        String sql="select * from idp_identities where u_name=?";
         ResultSet rs = db.getSelect(sql, uid);
         try {
             while(rs.next()) {
@@ -128,7 +139,8 @@ public class Identity implements DatabaseController {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6));
+                        rs.getString(6),
+                        rs.getByte(7));
                 identities.add(i);
             }
             rs.close();
@@ -150,7 +162,8 @@ public class Identity implements DatabaseController {
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getString(6));
+                    rs.getString(6),
+                    rs.getByte(7));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,7 +195,7 @@ public class Identity implements DatabaseController {
         if(db!=null) db.close();
     }
 
-    public static String generateOriginalInfo(Person person, Shadow shadow) {
+    public static String generatePersonalInfo(Person person, Shadow shadow) {
         if(person==null||shadow==null) {
             return null;
         }
@@ -201,18 +214,39 @@ public class Identity implements DatabaseController {
         return shadowedString;
     }
 
+    public static String generateEnterpriseInfo(Enterprise enterprise) {
+        if(enterprise==null) {
+            return null;
+        }
+        String shadowedString = "|";
+        shadowedString += enterprise.getName() + "|";
+        shadowedString += enterprise.getManager() + "|";
+        shadowedString += enterprise.getWebsite() + "|";
+        // TODO generate string.
+        return shadowedString;
+    }
+
     public static String generateNewIdentity(Person person, Shadow shadow) {
         try {
-            return Cryptography.toSHA256(generateOriginalInfo(person,shadow));
+            return Cryptography.toSHA256(generatePersonalInfo(person,shadow));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static String generateNewIdentity(String originalInfo) {
+    public static String generateNewIdentity(Enterprise enterprise) {
         try {
-            return Cryptography.toSHA256(originalInfo);
+            return Cryptography.toSHA256(generateEnterpriseInfo(enterprise));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String generateNewIdentity(String shadowedInfo) {
+        try {
+            return Cryptography.toSHA256(shadowedInfo);
         } catch (Exception e) {
             e.printStackTrace();
         }

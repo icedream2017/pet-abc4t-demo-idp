@@ -11,7 +11,7 @@ public class User implements DatabaseController {
     private String uid = null; // unique user ID in database
     private String username = null; // login name
     private String password = null; // login password (hashed)
-    private String securePass = null; // double identification password (preserved) (hashed)
+    private String regcode = null; // registration code
     private int type = 0; // user type: 0= registered user, 1= personal user, 2= enterprise user, 100= administrator
     private int activeFlag = 0;
     private int banFlag = 0;
@@ -22,26 +22,26 @@ public class User implements DatabaseController {
         this.db = new MyDatabase();
     }
 
-    public User(String uid, String username, String password, String securePass) {
+    public User(String uid, String username, String password, String regcode) {
         this.uid = uid;
         this.username = username;
         this.password = password;
-        this.securePass = securePass;
+        this.regcode = regcode;
     }
 
-    public User(String uid, String username, String password, String securePass, int type) {
+    public User(String uid, String username, String password, String regcode, int type) {
         this.uid = uid;
         this.username = username;
         this.password = password;
-        this.securePass = securePass;
+        this.regcode = regcode;
         this.type = type;
     }
 
-    public User(String uid, String username, String password, String securePass, int type, int activeFlag, int banFlag) {
+    public User(String uid, String username, String password, String regcode, int type, int activeFlag, int banFlag) {
         this.uid = uid;
         this.username = username;
         this.password = password;
-        this.securePass = securePass;
+        this.regcode = regcode;
         this.type = type;
         this.activeFlag = activeFlag;
         this.banFlag = banFlag;
@@ -51,7 +51,7 @@ public class User implements DatabaseController {
         this.uid = uid;
         this.username = username;
         this.password = password;
-        this.securePass = securePass;
+        this.regcode = securePass;
         this.type = type;
         this.activeFlag = activeFlag;
         this.banFlag = banFlag;
@@ -81,12 +81,12 @@ public class User implements DatabaseController {
         this.password = password;
     }
 
-    public String getSecurePass() {
-        return securePass;
+    public String getRegcode() {
+        return regcode;
     }
 
-    public void setSecurePass(String securePass) {
-        this.securePass = securePass;
+    public void setRegcode(String regcode) {
+        this.regcode = regcode;
     }
 
     public int getType() {

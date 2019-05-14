@@ -200,23 +200,27 @@ public class ActionDisposerServlet extends HttpServlet {
 
             if(cur_user.getActiveFlag()==1 && cur_user.getType()!=0) {
                 String newid_purpose=request.getParameter("newid_purpose");
-                byte newid_mask1=Byte.parseByte(request.getParameter("newid_mask1"));
-                byte newid_mask2=Byte.parseByte(request.getParameter("newid_mask2"));
-                byte newid_mask3=Byte.parseByte(request.getParameter("newid_mask3"));
-                byte newid_mask4=Byte.parseByte(request.getParameter("newid_mask4"));
-                byte newid_mask5=Byte.parseByte(request.getParameter("newid_mask5"));
-                byte newid_mask6=Byte.parseByte(request.getParameter("newid_mask6"));
-                byte newid_mask7=Byte.parseByte(request.getParameter("newid_mask7"));
+                byte sh_taxid=Byte.parseByte(request.getParameter("sh_taxid"));
+                byte sh_firstname=Byte.parseByte(request.getParameter("sh_firstname"));
+                byte sh_birth=Byte.parseByte(request.getParameter("sh_birth"));
+                byte sh_address=Byte.parseByte(request.getParameter("sh_address"));
+                byte sh_email=Byte.parseByte(request.getParameter("sh_email"));
+                byte sh_phone=Byte.parseByte(request.getParameter("sh_phone"));
+                byte sh_bio=Byte.parseByte(request.getParameter("sh_bio"));
                 String verify_password=request.getParameter("verify_password");
-
-                byte newid_mask = (byte)(newid_mask1|newid_mask2|newid_mask3|newid_mask4|newid_mask5|newid_mask6|newid_mask7);
+                try {
+                    verify_password = Cryptography.toSHA256(verify_password);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                byte newid_mask = (byte)(sh_taxid|sh_firstname|sh_birth|sh_address|sh_email|sh_phone|sh_bio);
 
                 Person cp = new Person();
                 boolean isPersonAvailable = cp.getElementById(cur_name);
                 cp.close();
 
                 Identity np = new Identity();
-                String newid_hashcode = Identity.generateNewIdentity(cp,new Shadow(newid_mask));
+                String newid_hashcode = Identity.generateNewIdentity(cp,new Shadow(newid_mask),newid_purpose);
                 String[] values1 = {null,cur_name,newid_hashcode,newid_purpose,null,null,Integer.toString(newid_mask)};
 
                 if(np.add(values1)==1) {

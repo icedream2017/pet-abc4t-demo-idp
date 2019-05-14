@@ -1,4 +1,4 @@
-<%@ page import="javabeans.Person" %>
+<%@ page import="javabeans.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,16 +29,7 @@
 <!-- header -->
 <div class="banner">
     <%@include file="includes/header.jsp" %>
-    <!-- check user signing status and active flag -->
-    <%
-        if (current_user_type==-1) {  // if user is not signed in
-            response.sendRedirect("login.jsp");
-        } else if (!current_user_isActive) {  // if user has not registered person
-            response.sendRedirect("register-personal.jsp");
-        } else if (current_user_type!=1 && current_user_isActive) {  // if user is not a personal user
-            response.sendRedirect("index.jsp");
-        }
-    %>
+
     <div class="banner-info1">
         <div class="banner-col">
         </div>
@@ -51,27 +42,40 @@
 <!-- header -->
 <div class="projects">
     <%
+        String hashcode = request.getParameter("vid");
+        Identity ia = new Identity();
+        boolean isIdAvailable = ia.getElementById(hashcode);
+        ia.close();
         Person p = new Person();
-        boolean flag = p.getElementById(cur_name);
+        boolean isPersonAvailable = p.getElementById(ia.getUid());
         p.close();
+        byte idmask = ia.getMask();
     %>
     <div class="products-section">
         <div class="container">
-            <h2>PERSONAL INFORMATION</h2>
+            <h2>VERIFICATION RESULT</h2>
             <div>
-                <% if (flag) { %>
+                <% if (isIdAvailable && isPersonAvailable) { %>
                 <table width="90%" align="center" border=1>
                     <tr>
                         <th width="20%">Attribute</th>
                         <th width="80%">Value</th>
                     </tr>
                     <tr>
-                        <td width="20%">Username</td>
-                        <td width="80%"><%=p.getUid()%></td>
+                        <td width="20%">Hashcode</td>
+                        <td width="80%"><%=ia.getHashcode()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Purpose</td>
+                        <td width="80%"><%=ia.getPurpose()%></td>
+                    </tr>
+                    <tr>
+                        <td width="20%">Is Adult?</td>
+                        <td width="80%"><%=Verification.isAdult(p)?"Yes":"No"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Tax ID</td>
-                        <td width="80%"><%=p.getTaxID()%></td>
+                        <td width="80%"><%=(Shadow.TAXID&idmask)==64?p.getTaxID():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Title</td>
@@ -83,7 +87,7 @@
                     </tr>
                     <tr>
                         <td width="20%">First Name</td>
-                        <td width="80%"><%=p.getFirstname()%></td>
+                        <td width="80%"><%=(Shadow.FIRSTNAME&idmask)==32?p.getFirstname():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Gender</td>
@@ -91,27 +95,27 @@
                     </tr>
                     <tr>
                         <td width="20%">Birth Date</td>
-                        <td width="80%"><%=p.getBirthdate()%></td>
+                        <td width="80%"><%=(Shadow.BIRTHDATE&idmask)==16?p.getBirthdate():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Home Address</td>
-                        <td width="80%"><%=p.getAddress()%></td>
+                        <td width="80%"><%=(Shadow.ADDRESS&idmask)==8?p.getAddress():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Email</td>
-                        <td width="80%"><%=p.getEmail()%></td>
+                        <td width="80%"><%=(Shadow.EMAIL&idmask)==4?p.getEmail():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Phone Nr.</td>
-                        <td width="80%"><%=p.getPhone()%></td>
+                        <td width="80%"><%=(Shadow.PHONE&idmask)==2?p.getPhone():"[hidden]"%></td>
                     </tr>
                     <tr>
                         <td width="20%">Bio</td>
-                        <td width="80%"><%=p.getDescription()%></td>
+                        <td width="80%"><%=(Shadow.DESCRIPTION&idmask)==1?p.getDescription():"[hidden]"%></td>
                     </tr>
                 </table>
                 <%} else { %>
-                    <p>Personal information unavailable.</p>
+                <p>Verification failed. This ID is unavailable.</p>
                 <%} %>
             </div>
         </div>
@@ -119,7 +123,7 @@
 </div>
 <!-- product -->
 <!-- footer -->
-  <%@include file="includes/footer.jsp" %>
+<%@include file="includes/footer.jsp" %>
 <!-- footer -->
 </body>
 </html>

@@ -58,13 +58,14 @@
     %>
     <div class="products-section">
         <div class="container">
-            <h2>YOUR IDENTITIES</h2>
+            <h2>MY IDENTITIES</h2>
             <div>
                 <% if (flag) {
                     Identity identity = new Identity();
                     ArrayList<Identity> arrayList = identity.getIdentitiesByUid(cur_name);
                     for (Identity i: arrayList) {
                 %>
+                <%--<img src="https://zxing.org/w/chart?cht=qr&chs=120x120&chld=L&choe=UTF-8&chl=<%=i.getHashcode()%>">--%>
                 <table width=90% align="center" border=1>
                     <tr>
                         <td width="20%">Hashcode</td>
@@ -76,14 +77,18 @@
                     </tr>
                     <tr>
                         <td width="20%">Masked Info</td>
-                        <td width="80%"><%=Identity.generatePersonalInfo(p,new Shadow(i.getMask()))%></td>
+                        <td width="80%"><%=Identity.generatePersonalInfo(p,new Shadow(i.getMask()),i.getPurpose())%></td>
                     </tr>
                     <tr>
                         <td width="20%">Is Adult?</td>
                         <td width="80%"><%=Verification.isAdult(p)?"Yes":"No"%></td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center"><a href="#">delete this identity</a></td>
+                        <td colspan="2" align="center">
+                            &nbsp;&nbsp;<a href="verification-res.jsp?vid=<%=i.getHashcode()%>">[verify]</a>&nbsp;&nbsp;
+                            &nbsp;&nbsp;<a href="#">[revoke]</a>&nbsp;&nbsp;
+                            &nbsp;&nbsp;<a href="#">[modify]</a>&nbsp;&nbsp;
+                        </td>
                     </tr>
                 </table><br><br>
                 <%  }

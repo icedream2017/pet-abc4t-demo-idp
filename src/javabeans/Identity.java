@@ -152,7 +152,7 @@ public class Identity implements DatabaseController {
 
     @Override
     public boolean getElementById(String id) {
-        String sql="select * from idp_identities where i_id=?";
+        String sql="select * from idp_identities where i_hash=?";
         ResultSet rs = db.getSelect(sql, id);
         try {
             rs.next();
@@ -173,13 +173,13 @@ public class Identity implements DatabaseController {
 
     @Override
     public int add(String v[]) {
-        String sql = "insert into idp_identities values(?,?,?,?,?,?)";
+        String sql = "insert into idp_identities values(?,?,?,?,?,?,?)";
         return db.update(sql, v);
     }
 
     @Override
     public int delete(String id) {
-        String sql = "delete from idp_identities where i_id=?";
+        String sql = "delete from idp_identities where i_hash=?";
         return db.update(sql, id);
     }
 
@@ -195,7 +195,7 @@ public class Identity implements DatabaseController {
         if(db!=null) db.close();
     }
 
-    public static String generatePersonalInfo(Person person, Shadow shadow) {
+    public static String generatePersonalInfo(Person person, Shadow shadow, String purpose) {
         if(person==null||shadow==null) {
             return null;
         }
@@ -203,14 +203,15 @@ public class Identity implements DatabaseController {
         byte mode = shadow.getMode();
         shadowedString += person.getTitle() + "|";
         shadowedString += person.getSurname() + "|";
-        shadowedString += person.getGender() + "|";
-        shadowedString += (mode & Shadow.TAXID)==64 ? person.getTaxID()+"|" : "x|";
         shadowedString += (mode & Shadow.FIRSTNAME)==32 ? person.getFirstname()+"|" : "x|";
+        shadowedString += (person.getGender()==1?"Male":"Female") + "|";
+        shadowedString += (mode & Shadow.TAXID)==64 ? person.getTaxID()+"|" : "x|";
         shadowedString += (mode & Shadow.BIRTHDATE)==16 ? person.getBirthdate()+"|" : "x|";
         shadowedString += (mode & Shadow.ADDRESS)==8 ? person.getAddress()+"|" : "x|";
         shadowedString += (mode & Shadow.EMAIL)==4 ? person.getEmail()+"|" : "x|";
         shadowedString += (mode & Shadow.PHONE)==2 ? person.getPhone()+"|" : "x|";
         shadowedString += (mode & Shadow.DESCRIPTION)==1 ? person.getDescription()+"|" : "x|";
+        shadowedString += purpose + "|";
         return shadowedString;
     }
 
@@ -226,30 +227,20 @@ public class Identity implements DatabaseController {
         return shadowedString;
     }
 
-    public static String generateNewIdentity(Person person, Shadow shadow) {
+    public static String generateHashString(String str) {
         try {
-            return Cryptography.toSHA256(generatePersonalInfo(person,shadow));
+            return Cryptography.toSHA256(str);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String generateNewIdentity(Person person, Shadow shadow, String purpose) {
+        return generateHashString(generatePersonalInfo(person,shadow,purpose));
     }
 
     public static String generateNewIdentity(Enterprise enterprise) {
-        try {
-            return Cryptography.toSHA256(generateEnterpriseInfo(enterprise));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String generateNewIdentity(String shadowedInfo) {
-        try {
-            return Cryptography.toSHA256(shadowedInfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return generateHashString(generateEnterpriseInfo(enterprise));
     }
 }

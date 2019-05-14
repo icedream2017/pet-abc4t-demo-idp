@@ -1,3 +1,4 @@
+<%@ page import="javabeans.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -35,38 +36,117 @@
 <!-- header -->
 <!-- registration -->
 <div class="login-main">
+    <%
+        Person p = new Person();
+        boolean flag = p.getElementById(cur_name);
+        p.close();
+    %>
     <div class="container">
         <div class="register">
             <form action="register-identity.action" method="post">
-                <div class="register-top-grid">
-                    <h3>CREATE A NEW IDENTITY</h3>
-                    <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                        <span>Purpose<label>*</label></span>
+                <div class="container">
+                    <h2>CREATE A NEW IDENTITY</h2>
+                    <div>
+                        <span>Purpose</span><br>
                         <input type="text" name="newid_purpose">
+                        <br><br>
                     </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span></span>
-                        <input type="hidden">
+                    <div>
+                        <span>Privacy Mode</span><br>
+                        <div>
+                            <% if (flag) { %>
+                            <table width="90%" align="center" border=1>
+                                <tr>
+                                    <th width="20%">Attribute</th>
+                                    <th width="60%">Value</th>
+                                    <th width="20%">Mode</th>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Username</td>
+                                    <td width="60%"><%=p.getUid()%></td>
+                                    <td width="20%">(Not included in identity)</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Tax ID</td>
+                                    <td width="60%"><%=p.getTaxID()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_taxid" value="64">Public /
+                                        <input type="radio" name="sh_taxid" value="0" checked>Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Title</td>
+                                    <td width="60%"><%=p.getTitle()%></td>
+                                    <td width="20%">(Public by default)</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Last Name</td>
+                                    <td width="60%"><%=p.getSurname()%></td>
+                                    <td width="20%">(Public by default)</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">First Name</td>
+                                    <td width="60%"><%=p.getFirstname()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_firstname" value="32" checked>Public /
+                                        <input type="radio" name="sh_firstname" value="0">Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Gender</td>
+                                    <td width="60%"><%=p.getGender()==1?"Male":"Female"%></td>
+                                    <td width="20%">(Public by default)</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Birth Date</td>
+                                    <td width="60%"><%=p.getBirthdate()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_birth" value="16">Public /
+                                        <input type="radio" name="sh_birth" value="0" checked>Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Home Address</td>
+                                    <td width="60%"><%=p.getAddress()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_address" value="8">Public /
+                                        <input type="radio" name="sh_address" value="0" checked>Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Email</td>
+                                    <td width="60%"><%=p.getEmail()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_email" value="4">Public /
+                                        <input type="radio" name="sh_email" value="0" checked>Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Phone Nr.</td>
+                                    <td width="60%"><%=p.getPhone()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_phone" value="2">Public /
+                                        <input type="radio" name="sh_phone" value="0" checked>Private
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="20%">Bio</td>
+                                    <td width="60%"><%=p.getDescription()%></td>
+                                    <td width="20%">
+                                        <input type="radio" name="sh_bio" value="1">Public /
+                                        <input type="radio" name="sh_bio" value="0" checked>Private
+                                    </td>
+                                </tr>
+                            </table>
+                            <%} else { %>
+                            <p>Personal information unavailable.</p>
+                            <%} %>
+                        </div>
+                        <br>
                     </div>
-                    <div class="wow fadeInLeft" data-wow-delay="0.4s">
-                        <span>Privacy Mode<label>*</label></span>
-                        <input type="checkbox" name="newid_mask1" value="64">Tax ID <br>
-                        <input type="checkbox" name="newid_mask2" value="32" checked>First Name <br>
-                        <input type="checkbox" name="newid_mask3" value="16">Birthday <br>
-                        <input type="checkbox" name="newid_mask4" value="8">Address <br>
-                        <input type="checkbox" name="newid_mask5" value="4">Email Address <br>
-                        <input type="checkbox" name="newid_mask6" value="2">Phone Number <br>
-                        <input type="checkbox" name="newid_mask7" value="1" checked>Description <br>
-                    </div>
-                </div>
-                <div class="register-bottom-grid">
-                    <div class="wow fadeInLeft" data-wow-delay="0.4s">
+                    <div>
                         <span>Verify your Password<label>*</label></span>
                         <input type="password" name="verify_password">
-                    </div>
-                    <div class="wow fadeInRight" data-wow-delay="0.4s">
-                        <span></span>
-                        <input type="hidden">
                     </div>
                 </div>
                 <div class="register-but">

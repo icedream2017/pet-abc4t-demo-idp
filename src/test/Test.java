@@ -12,12 +12,12 @@ public class Test {
                 "harry.potter@hogwarts.com","+441234567890","I am test data.");
         byte shadowMode = Shadow.FIRSTNAME | Shadow.ADDRESS | Shadow.EMAIL | Shadow.BIRTHDATE;
         Shadow s = new Shadow(shadowMode);
-        String plainInfo = Identity.generatePersonalInfo(p,s);
+        String plainInfo = Identity.generatePersonalInfo(p,s,"test identity");
         System.out.println("original info: ");
         System.out.println(plainInfo);
         System.out.println("Shadow Mode:");
         System.out.println(shadowMode);
-        String hashedInfo = Identity.generateNewIdentity(plainInfo);
+        String hashedInfo = Identity.generateHashString(plainInfo);
         System.out.println("generated identity: ");
         System.out.println(hashedInfo);
         System.out.println("Is Adult?");

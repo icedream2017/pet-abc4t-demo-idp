@@ -43,9 +43,11 @@
     %>
     <div class="container">
         <div class="register">
+            <% if (flag && current_user_type==1) { %>
             <form action="register-identity.action" method="post">
                 <div class="container">
                     <h2>CREATE A NEW IDENTITY</h2>
+
                     <div>
                         <span>Purpose</span><br>
                         <input type="text" name="newid_purpose">
@@ -54,7 +56,7 @@
                     <div>
                         <span>Privacy Mode</span><br>
                         <div>
-                            <% if (flag) { %>
+
                             <table width="90%" align="center" border=1>
                                 <tr>
                                     <th width="20%">Attribute</th>
@@ -138,9 +140,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <%} else { %>
-                            <p>Personal information unavailable.</p>
-                            <%} %>
+
                         </div>
                         <br>
                     </div>
@@ -153,6 +153,11 @@
                     <input type="submit" value="Submit" />
                 </div>
             </form>
+            <%} else { %>
+            <p>Personal information unavailable.</p>
+            <p>You may register your information first to use this function,</p>
+            <p>or sign in with a personal account.</p>
+            <%} %>
         </div>
     </div>
 </div>

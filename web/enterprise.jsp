@@ -1,4 +1,3 @@
-<%@ page import="javabeans.Person" %>
 <%@ page import="javabeans.Enterprise" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -36,8 +35,6 @@
             response.sendRedirect("login.jsp");
         } else if (!current_user_isActive) {  // if user has not registered person
             response.sendRedirect("register-enterprise.jsp");
-        } else if (current_user_type!=2 && current_user_isActive) {  // if user is not a personal user
-            response.sendRedirect("index.jsp");
         }
     %>
     <div class="banner-info1">
@@ -58,9 +55,9 @@
     %>
     <div class="products-section">
         <div class="container">
-            <h2>PERSONAL INFORMATION</h2>
+            <h2>ENTERPRISE INFORMATION</h2>
             <div>
-                <% if (flag) { %>
+                <% if (flag && current_user_type==2) { %>
                 <table width="90%" align="center" border=1>
                     <tr>
                         <td width="20%">Username</td>
@@ -101,6 +98,7 @@
                 </table>
                 <%} else { %>
                 <p>Enterprise information unavailable.</p>
+                <p>The current user is not an enterprise user.</p>
                 <%} %>
             </div>
         </div>

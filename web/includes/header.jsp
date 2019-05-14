@@ -46,7 +46,7 @@
                 <li><a href="enterprise.jsp" class="root">COMPANY</a>
                     <ul class="drdw">
                         <li><a href="enterprise.jsp">Profile</a></li>
-                        <li><a href="index.jsp">Application</a></li>
+                        <li><a href="identity-enterprise.jsp">Identity</a></li>
                         <li><a href="verification.jsp">Verification</a></li>
                     </ul>
                 </li>

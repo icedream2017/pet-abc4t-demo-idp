@@ -173,6 +173,8 @@ public class ActionDisposerServlet extends HttpServlet {
                 Enterprise np = new Enterprise();
                 String[] values1 = {null,cur_name,new_company_name,new_manager_name,
                         new_website,new_found_date,new_address,new_email,new_phone,new_description};
+                np.setAll(null,cur_name,new_company_name,new_manager_name,
+                        new_website,new_found_date,new_address,new_email,new_phone,new_description);
                 int resp = np.add(values1);
                 if(resp==1) {
                     User cu = new User();
@@ -180,6 +182,9 @@ public class ActionDisposerServlet extends HttpServlet {
                     cu.updateType(2);
                     cu.activeUser(true);
                     cu.saveLoginHistory(3,cur_name,dformat.format(date),addr,"enterprise information added.");
+                    Identity eid = new Identity();
+                    eid.add(new String[]{null,cur_name,Identity.generateEnterpriseInfo(np),new_company_name,null,null,Byte.toString(Shadow.PUBLIC)});
+                    eid.close();
                     out.println("Enterprise information registered successful!<br>");
                     out.println("<a href='enterprise.jsp'>RETURN</a><br>");
                     cu.close();
@@ -226,7 +231,7 @@ public class ActionDisposerServlet extends HttpServlet {
                 if(np.add(values1)==1) {
                     User cu = new User();
                     if(cu.identifyUser(cur_name,verify_password)!=-1) {
-                        cu.saveLoginHistory(3,cur_name,dformat.format(date),addr,"new identity created.");
+                        cu.saveLoginHistory(4,cur_name,dformat.format(date),addr,"new identity created.");
                         out.println("New identity created successful!<br>");
                         out.println("<a href='identities.jsp'>RETURN</a><br>");
                     } else {
@@ -282,6 +287,19 @@ public class ActionDisposerServlet extends HttpServlet {
         out.println("  <BODY>");
         out.print("<center><h3>Action Disposer Page</h3><hr/><br/>");
 
+        if(url.equals("/verify-identity.action"))
+        {
+            flag=1;
+            String hashcode = request.getParameter("iid");
+            Identity tid = new Identity();
+            if(tid.getElementById(hashcode)) {
+                out.println(Verification.getIdentityPlainString(hashcode));
+            } else {
+                out.println("wrong operation!<br>");
+            }
+            tid.close();
+        }
+
         // The following actions are required to sign in.
         if(ut==-1)
         {
@@ -296,6 +314,27 @@ public class ActionDisposerServlet extends HttpServlet {
             session.invalidate();
             out.println("Log out successful!<br>");
             out.println("<a href='index.jsp'>RETURN</a><br>");
+        }
+
+        if(url.equals("/identity-del.action"))
+        {
+            flag=1;
+            String hashcode = request.getParameter("iid");
+            User cu = new User();
+            if(cu.identifyUser(cur_name,cur_pass)!=1) {
+                Identity tid = new Identity();
+                if(tid.delete(hashcode)==1) {
+                    cu.saveLoginHistory(5,cur_name,dformat.format(date),addr,"an identity revoked.");
+                    out.println("Identity revoked!<br>");
+                } else {
+                    out.println("Operation failed!<br>");
+                }
+                tid.close();
+            } else {
+                out.println("Operation failed!<br>");
+            }
+            cu.close();
+            out.println("<a href='identities.jsp'>RETURN</a><br>");
         }
 
         if(flag==0)

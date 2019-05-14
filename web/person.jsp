@@ -35,8 +35,6 @@
             response.sendRedirect("login.jsp");
         } else if (!current_user_isActive) {  // if user has not registered person
             response.sendRedirect("register-personal.jsp");
-        } else if (current_user_type!=1 && current_user_isActive) {  // if user is not a personal user
-            response.sendRedirect("index.jsp");
         }
     %>
     <div class="banner-info1">
@@ -59,7 +57,7 @@
         <div class="container">
             <h2>PERSONAL INFORMATION</h2>
             <div>
-                <% if (flag) { %>
+                <% if (flag && current_user_type==1) { %>
                 <table width="90%" align="center" border=1>
                     <tr>
                         <th width="20%">Attribute</th>
@@ -112,6 +110,7 @@
                 </table>
                 <%} else { %>
                     <p>Personal information unavailable.</p>
+                    <p>The current user is not a personal user.</p>
                 <%} %>
             </div>
         </div>

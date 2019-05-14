@@ -4,23 +4,35 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Verification {
-    public int verifyIdentity(String uid, String identity, String pubkey) {
-        return 0;
+
+    public static String getIdentityPlainString(String hashcode) {
+        if(hashcode==null) {
+            return null;
+        }
+        Identity identity = new Identity();
+        if(identity.getElementById(hashcode)) {
+            Person person = new Person();
+            boolean isPersonUser = person.getElementById(identity.getUid());
+            person.close();
+            Enterprise enterprise = new Enterprise();
+            boolean isEnterpriseUser = enterprise.getElementById(identity.getUid());
+            enterprise.close();
+            if (isPersonUser) {
+                return Identity.generatePersonalInfo(person, new Shadow(identity.getMask()), identity.getPurpose());
+            } else if (isEnterpriseUser) {
+                return Identity.generateEnterpriseInfo(enterprise);
+            }
+        }
+        return "identity unavailable";
     }
 
-    public int verifyPermission(String identity) {
-        return 0;
+    public static int validateCurrentUser(String uid, String pw) {
+        User user = new User();
+        int ut = user.identifyUser(uid,pw);
+        return ut;
     }
 
-    public String showInfo(String identity, String pubkey) {
-        return null;
-    }
-
-    public int validateCurrentUser(String uid, String pw) {
-        return 0;
-    }
-
-    public int validateCurrentUser(User u) {
+    public static int validateUserTypeByIdentity(String hashcode) {
         return 0;
     }
 

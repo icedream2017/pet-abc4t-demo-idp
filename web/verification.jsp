@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Person</title>
+    <title>Verification</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +46,7 @@
             <div>
                 <form action="verification-res.jsp" method="get">
                     <h3>Input identity hashcode</h3>
-                    <input type="text" name="vid" />
+                    <input type="text" name="iid" />
                     <input type="submit" value="submit" />
                 </form>
             </div>

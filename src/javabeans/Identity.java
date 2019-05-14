@@ -223,7 +223,11 @@ public class Identity implements DatabaseController {
         shadowedString += enterprise.getName() + "|";
         shadowedString += enterprise.getManager() + "|";
         shadowedString += enterprise.getWebsite() + "|";
-        // TODO generate string.
+        shadowedString += enterprise.getDate() + "|";
+        shadowedString += enterprise.getAddress() + "|";
+        shadowedString += enterprise.getEmail() + "|";
+        shadowedString += enterprise.getPhone() + "|";
+        shadowedString += enterprise.getDescription() + "|";
         return shadowedString;
     }
 

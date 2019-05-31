@@ -293,10 +293,11 @@ public class ActionDisposerServlet extends HttpServlet {
             String hashcode = request.getParameter("iid");
             Identity tid = new Identity();
             if(tid.getElementById(hashcode)) {
-                out.println(Verification.getIdentityPlainString(hashcode));
+                out.println(Verification.getIdentityPlainString(hashcode)+"<br>");
             } else {
                 out.println("wrong operation!<br>");
             }
+            ut=0;
             tid.close();
         }
 

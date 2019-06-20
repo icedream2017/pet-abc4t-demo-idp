@@ -1,3 +1,9 @@
+/*
+ * Author: Jiayi Zhao
+ * This source code is used for my Master Project.
+ * Non-commercial use only.
+ */
+
 package database;
 
 import java.util.ArrayList;

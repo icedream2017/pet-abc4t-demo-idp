@@ -1,3 +1,9 @@
+/*
+ * Author: Jiayi Zhao
+ * This source code is used for my Master Project.
+ * Non-commercial use only.
+ */
+
 package javabeans;
 
 import database.MyDatabase;
